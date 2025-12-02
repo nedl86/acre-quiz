@@ -12,6 +12,30 @@ const QuizGame = () => {
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [score, setScore] = useState(0);
 
+    // New state for feedback
+    const [answerState, setAnswerState] = useState({
+        isAnswered: false,
+        selectedOption: null,
+        isCorrect: false,
+        feedbackMsg: ''
+    });
+
+    const correctSlangs = [
+        "De rocha, parente! 🐊",
+        "Só o mi! ✨",
+        "Arrochou! 🔥",
+        "Tu é brabo mesmo! 🏹",
+        "Acertou na mosca! 🎯"
+    ];
+
+    const incorrectSlangs = [
+        "Tá leso, é? 🤪",
+        "Deu a bobeira, maninho! 🥀",
+        "Nem aqui, nem no Juruá! 🛶",
+        "Viajou na maionese! 🛸",
+        "Errou feio, errou rude! ❌"
+    ];
+
     const startGame = () => {
         // Shuffle and pick 10 questions
         const shuffled = [...allQuestions].sort(() => 0.5 - Math.random());
@@ -19,16 +43,34 @@ const QuizGame = () => {
         setCurrentQuestionIndex(0);
         setScore(0);
         setGameState('playing');
+        setAnswerState({ isAnswered: false, selectedOption: null, isCorrect: false, feedbackMsg: '' });
     };
 
     const handleAnswer = (selectedOption) => {
+        if (answerState.isAnswered) return; // Prevent double clicks
+
         const currentQuestion = currentQuestions[currentQuestionIndex];
-        if (selectedOption === currentQuestion.answer) {
+        const isCorrect = selectedOption === currentQuestion.answer;
+
+        if (isCorrect) {
             setScore(score + 1);
         }
 
+        const slangs = isCorrect ? correctSlangs : incorrectSlangs;
+        const randomSlang = slangs[Math.floor(Math.random() * slangs.length)];
+
+        setAnswerState({
+            isAnswered: true,
+            selectedOption,
+            isCorrect,
+            feedbackMsg: randomSlang
+        });
+    };
+
+    const handleNextQuestion = () => {
         if (currentQuestionIndex + 1 < QUESTIONS_PER_GAME) {
             setCurrentQuestionIndex(currentQuestionIndex + 1);
+            setAnswerState({ isAnswered: false, selectedOption: null, isCorrect: false, feedbackMsg: '' });
         } else {
             setGameState('result');
         }
@@ -41,8 +83,10 @@ const QuizGame = () => {
                 <QuestionCard
                     question={currentQuestions[currentQuestionIndex]}
                     onAnswer={handleAnswer}
+                    onNext={handleNextQuestion}
                     currentQuestionIndex={currentQuestionIndex}
                     totalQuestions={QUESTIONS_PER_GAME}
+                    answerState={answerState}
                 />
             )}
             {gameState === 'result' && (

@@ -28,7 +28,7 @@ body {
   background: white;
   padding: 2rem;
   border-radius: 15px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
   text-align: center;
   border: 5px solid var(--acre-yellow);
 }
@@ -54,7 +54,8 @@ button:active {
   transform: scale(0.98);
 }
 
-.btn-start, .btn-restart {
+.btn-start,
+.btn-restart {
   background-color: var(--acre-yellow);
   color: var(--acre-green);
   border: none;
@@ -62,10 +63,11 @@ button:active {
   font-size: 1.2rem;
   border-radius: 50px;
   margin-top: 20px;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.btn-start:hover, .btn-restart:hover {
+.btn-start:hover,
+.btn-restart:hover {
   background-color: #ffe52e;
 }
 
@@ -104,8 +106,15 @@ button:active {
 }
 
 @keyframes bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
 }
 
 .score-display {
@@ -123,4 +132,74 @@ button:active {
 .message {
   font-size: 1.2rem;
   font-style: italic;
+}
+
+/* Feedback Styles */
+.btn-option.correct {
+  background-color: var(--acre-green);
+  color: white;
+  border-color: var(--acre-green);
+}
+
+.btn-option.incorrect {
+  background-color: var(--acre-red);
+  color: white;
+  border-color: var(--acre-red);
+}
+
+.btn-option.disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.feedback-container {
+  margin-top: 20px;
+  padding: 15px;
+  border-radius: 10px;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.feedback-correct {
+  background-color: #dcfce7;
+  border: 2px solid var(--acre-green);
+  color: var(--acre-green);
+}
+
+.feedback-incorrect {
+  background-color: #fee2e2;
+  border: 2px solid var(--acre-red);
+  color: var(--acre-red);
+}
+
+.feedback-msg {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin: 0 0 10px 0;
+}
+
+.btn-next {
+  background-color: var(--text-color);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-next:hover {
+  background-color: #000;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
